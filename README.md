@@ -16,6 +16,6 @@
 <li>Junit4</li>
 <li>Selenium</li>
 <li>Allure</li>
-
 </ul>
+<img src="src/main/resources/chrome_kLCK9UEg1g.png">
 

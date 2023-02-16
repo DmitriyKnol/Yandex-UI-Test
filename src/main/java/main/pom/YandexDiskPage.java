@@ -93,6 +93,7 @@ public class YandexDiskPage {
                 .until(ExpectedConditions.elementToBeClickable(copySuccessfullMesage));
     }
 
+    @Step("Копирование в файла в новую папку")
     public void copyFileToNewFolder(Actions action) {
         openOldFolder(action);
         contextClickToOldFile(action);
@@ -104,6 +105,7 @@ public class YandexDiskPage {
         driver.navigate().refresh();
     }
 
+    @Step("Переход в новую папку")
     public void openNewFolder(Actions action) {
         action.doubleClick(driver.findElement(newFolder)).perform();
     }
@@ -112,6 +114,7 @@ public class YandexDiskPage {
         return driver.findElement(oldFile);
     }
 
+    @Step("Проверка названия новой папки")
     public String getTextNewFile() {
         return getFile().getText();
     }
