@@ -1,14 +1,13 @@
 package main.pom;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 
 public class YandexDiskPage {
     // Раздел "Файлы"
@@ -19,8 +18,6 @@ public class YandexDiskPage {
     private final By newFolder = By.xpath(".//div[@aria-label ='Новая папка']");
     // Файл для копирования
     private final By oldFile = By.xpath(".//div[@aria-label = 'CopyMe.docx']");
-    // Скопированный файл
-    // private final By newFile = By.xpath(".//div[@aria-label = 'CopyMe.docx']/span");
 
     // Кнопка копировать из контекстного меню
     private final By copyButton = By.xpath(".//span[text() ='Копировать']");
@@ -44,6 +41,20 @@ public class YandexDiskPage {
     private final By logoAccount = By.xpath(".//a[@aria-label = 'Аккаунт']/div");
     // Кнопка выхода из аккаунта
     private final By logoutButton = By.xpath(".//span[text()='Выйти']");
+    // Пространство с файлами
+    private final By area = By.xpath(".//div[@class='root__content-container']");
+    // Кнопка Загрузить файл
+    private final By uploadFile = By.xpath(".//input[@class='context-menu-create-popup__upload-input']");
+    // Загруженный файл
+    private final By fileToTest = By.xpath(".//div[@aria-label='test.txt']");
+    // Сообщение Все файлы загружены
+    private final By uploadSaccessfull = By.xpath(".//h3[text()='Все файлы загружены']");
+    // Текст внутри файла
+    // private final By testText = By.xpath("/html/body/div/div/div/div/div[1]/div/div[4]/div/div/div/p");
+    // private final By testText = By.cssSelector("p[class='mg1]");
+    // Кнопка Поделиться
+    private final By sendButton = By.className("hover-tooltip__tooltip-anchor");
+
     private WebDriver driver;
 
     private final String urlYandexDisk = "https://disk.yandex.ru/";
@@ -139,6 +150,44 @@ public class YandexDiskPage {
 
     public void clickLogoutButton() {
         driver.findElement(logoutButton);
+    }
+
+    public void clickContext(Actions action) {
+        action.contextClick(driver.findElement(area)).perform();
+    }
+
+    @Step("Загрузка txt файла")
+    public void uploadFile(Actions action) {
+        clickContext(action);
+        driver.findElement(uploadFile).sendKeys("C:/Users/User/Downloads/test.txt");
+    }
+
+    @Step("Открытие файла для проверки текста")  // Не работает, дописать
+    public void openText(Actions action) {
+        WebElement wait = new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(uploadSaccessfull));
+        action.doubleClick(driver.findElement(fileToTest)).perform();
+    }
+
+    //    public String getTestText() {
+//        WebElement wait = new WebDriverWait(driver, Duration.ofSeconds(3))
+//            .until(ExpectedConditions.visibilityOfElementLocated(sendButton));
+////        JavascriptExecutor js = (JavascriptExecutor) driver;
+////        WebElement element;
+////        element = (WebElement) js.executeScript("return  document.querySelector(\"p[class='mg1']\");");
+////
+////        JavascriptExecutor js = (JavascriptExecutor) driver;
+////        String text = js.executeScript("return window.getComputedStyle(document.querySelector('.mg1'))")
+////                .toString();
+//
+////               return  element.getText();
+//    }
+    @Step("Закрытие вкладки")
+    public void closedTab() {
+        ArrayList tabs2 = new ArrayList(driver.getWindowHandles());//Получение списка табов
+        driver.switchTo().window(tabs2.get(1).toString());//Переключение на второй таб в браузере
+        driver.close();//Закрытие активного таба
+        driver.switchTo().window(tabs2.get(0).toString());//Переключение на первый таб в браузере
     }
 
     @Step("Выход из аккаунта")

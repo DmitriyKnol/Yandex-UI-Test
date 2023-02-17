@@ -6,7 +6,6 @@ import main.pom.MainPage;
 import main.pom.YandexDiskPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
@@ -31,7 +30,6 @@ public class BaseTest {
     public Actions getAction() {
         return action;
     }
-
     @Step("Открытие страницы Yandex.ru")
     public void openUrl() {
         driver.get(mainPage.getUrl());
