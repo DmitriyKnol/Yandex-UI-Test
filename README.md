@@ -20,7 +20,6 @@
 <li>Selenium</li>
 <li>Allure</li>
 </ul>
-<img src="src/main/resources/chrome_ukhdMIgfxA.png">
-<br>
 <img src="src/main/resources/chrome_0G8tGExgJb.png">
-
+<br>
+<img src="src/main/resources/chrome_ukhdMIgfxA.png">
